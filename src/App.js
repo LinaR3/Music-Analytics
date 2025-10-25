@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-// Íconos requeridos
-import { Home, BarChartHorizontalBig, Sparkles, Music, ArrowUp, ArrowDown, TrendingUp, Layers, Send, Linkedin, Github, Twitter, Zap, Facebook, Instagram, Sun, Moon, AlertTriangle, CheckCircle, Star, Clock, ThumbsDown } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, Tooltip as RechartsTooltip } from 'recharts';
+// Íconos requeridos (Limpiados)
+import { Home, BarChartHorizontalBig, Sparkles, Music, ArrowUp, ArrowDown, TrendingUp, Layers, Send, Linkedin, Github, Twitter, Zap, Facebook, Instagram, Sun, Moon, AlertTriangle, CheckCircle, Star, Clock, ThumbsDown, 
+  //PlayCircle
+ } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, Tooltip as RechartsTooltip } from 'recharts'; // Dot eliminado
 
 // --- ESTILOS PERSONALIZADOS Y FUENTES ---
 const customStyles = `
@@ -167,11 +169,11 @@ const kpiMetricsUpdated = [
 ];
 // Mock Data para Hallazgos
 const teamMembers = [
-    { name: 'Member 1', title: 'Analista Principal', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member1' },
-    { name: 'Member 2', title: 'Ingeniero de Datos', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member2' },
-    { name: 'Member 3', title: 'Científica de Datos', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member3' },
-    { name: 'Member 4', title: 'Diseñadora UX/UI', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member4' },
-    { name: 'Member 5', title: 'Gerente de Proyecto', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member5' },
+    { name: 'Jacobo', title: 'Desarrollador Web Frontend', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member1' },
+    { name: 'Lina G', title: 'Ingeniero de Datos', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member2' },
+    { name: 'Lina R', title: 'Desarrollador Web Front y Backend', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member3' },
+    { name: 'Juan', title: 'Pendiente UX/UI', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member4' },
+    { name: 'Luis', title: ' Pendiente', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member5' },
 ];
 const teamSocials = [
     { name: 'LinkedIn', icon: Linkedin, url: '#' }, { name: 'GitHub', icon: Github, url: '#' }, { name: 'Twitter', icon: Twitter, url: '#' }, { name: 'Facebook', icon: Facebook, url: '#' }, { name: 'Instagram', icon: Instagram, url: '#' },
@@ -282,6 +284,7 @@ const callGeminiApi = async (payload) => {
 // Helper para formatear Tooltip de Pie Chart
 const renderCustomPieTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
+      // Acceder a los datos originales anidados en payload[0].payload.payload
       const data = payload[0]?.payload?.payload;
       if (data) {
           return (
@@ -413,13 +416,15 @@ const MetricCard = memo(({ isDark, title, value, change, icon: Icon, trend, desc
 
   const cardClasses = `p-4 rounded-lg shadow-md border bg-[var(--card-bg-color)] border-[var(--glass-border)] hover:border-[var(--accent-color)] hover:shadow-lg hover:shadow-[var(--accent-color)]/10 transition-all duration-300 flex flex-col`;
 
+  // CORREGIDO: Definición JSX correcta
   const loadingIndicator = (
     <div className="h-1 rounded-full overflow-hidden mt-2 bg-gray-300 dark:bg-gray-600">
         <div className={`h-full animate-pulse w-1/3 bg-[var(--accent-color)]`}></div>
     </div>
    );
 
-   const ErrorDisplay = ({ message }) => (
+   // Componente funcional interno para ErrorDisplay
+  const ErrorDisplay = ({ message }) => (
     <div className="mt-2 p-2 rounded-lg bg-red-900/40 border border-red-500/50 text-red-300 text-xs font-body-sintony flex items-center gap-2">
        <AlertTriangle className="w-4 h-4 flex-shrink-0" />
        <span>{message}</span>
@@ -561,8 +566,6 @@ const HomeCarousel = memo(({ isDark, setActiveTab }) => {
             </div>
 
             {/* Controles de Navegación (Flechas eliminadas) */}
-            {/* <button onClick={goToPrev} ... </button> */}
-            {/* <button onClick={goToNext} ... </button> */}
 
             {/* Indicadores de Puntos */}
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
@@ -891,7 +894,5 @@ function App() {
   );
 }
 
-// Asegurar que App sea la exportación por defecto
 export default App;
-
 
