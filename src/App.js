@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { Home, BarChartHorizontalBig, Sparkles, Music, ArrowUp, ArrowDown, TrendingUp, Layers, Send, Linkedin, Github, Twitter, Zap, Facebook, Instagram, Sun, Moon, AlertTriangle, Star, Clock, ThumbsDown } from 'lucide-react';
+import { Home, BarChartHorizontalBig, Sparkles, Music, ArrowUp, ArrowDown, TrendingUp, Layers, Send, Linkedin, Github, Zap, Facebook, Instagram, Sun, Moon, AlertTriangle, Star, Clock, ThumbsDown } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, Tooltip as RechartsTooltip } from 'recharts';
 
 // --- IMPORTACIONES DE ESTILOS Y IMÁGENES ---
@@ -19,10 +19,8 @@ const teamMembers = [
     { name: 'Lina Reina', title: 'Desarrolladora Web Frontend y Analista de Datos Backend', avatar: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=Member3' },
 ];
 const teamSocials = [
-    { name: 'LinkedIn', icon: Linkedin, url: '#' }, { name: 'GitHub', icon: Github, url: '#' }, { name: 'Twitter', icon: Twitter, url: '#' }, { name: 'Facebook', icon: Facebook, url: '#' }, { name: 'Instagram', icon: Instagram, url: '#' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/linareina/' }, { name: 'GitHub', icon: Github, url: 'https://github.com/LinaR3/Music-Analytics' }, { name: 'Facebook', icon: Facebook, url: 'https://web.facebook.com/linareinadj/?_rdc=1&_rdr#' }, { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/linareinadj' },
 ];
-
-// --- DATOS REALES (Extraídos de Colab - Céll 22 y 40) ---
 const dataByDecadeReal = [
     { decade: '1921-1940', avg_duration_min: 3.287344, avg_energy: 0.2737, avg_danceability: 0.5532 },
     { decade: '1941-1960', avg_duration_min: 3.683126, avg_energy: 0.2743, avg_danceability: 0.4733 },
@@ -30,7 +28,6 @@ const dataByDecadeReal = [
     { decade: '1981-2000', avg_duration_min: 4.164311, avg_energy: 0.5917, avg_danceability: 0.5580 },
     { decade: '2001-2021', avg_duration_min: 3.846374, avg_energy: 0.6405, avg_danceability: 0.5911 },
 ];
-// (Datos de Colab - Céll 22)
 const avgDurationByDecade = [
     { epoca: '1ra (1921-40)', dur_min: 3.287344 }, // 3 min 17 seg
     { epoca: '2da (1941-60)', dur_min: 3.683126 }, // 3 min 41 seg
@@ -38,7 +35,6 @@ const avgDurationByDecade = [
     { epoca: '4ta (1981-00)', dur_min: 4.164311 }, // 4 min 10 seg
     { epoca: '5ta (2001-21)', dur_min: 3.846374 }, // 3 min 51 seg
 ];
-// (Datos de Colab - Céll 30) - Simplificado
 const loudnessByYearReal = [
     { year: 1921, avg_loudness: -17.0 }, { year: 1930, avg_loudness: -12.8 },
     { year: 1940, avg_loudness: -13.7 }, { year: 1950, avg_loudness: -13.9 },
@@ -47,11 +43,9 @@ const loudnessByYearReal = [
     { year: 2000, avg_loudness: -8.2 },  { year: 2010, avg_loudness: -6.9 },
     { year: 2020, avg_loudness: -6.6 },
 ];
-// (Datos de Colab - Céll 32)
 const explicitCountsReal = { 'No Explícita': 156220, 'Explícita': 14433 };
 const totalSongs = explicitCountsReal['No Explícita'] + explicitCountsReal['Explícita']; // 170,653
 const explicitPercentage = (explicitCountsReal['Explícita'] / totalSongs) * 100; // 8.45%
-// (Datos de Colab - Céll 26) - CORREGIDOS SEGÚN SCREENSHOT
 const keyDistributionReal = [
     { key: 0, name: 'C', count: 21673, color: '#d68b09' },  // 12.7%
     { key: 7, name: 'G', count: 20820, color: '#3c3c3c' },  // 12.2%
@@ -66,7 +60,6 @@ const keyDistributionReal = [
     { key: 6, name: 'F#', count: 8703, color: '#00ffff' },  // 5.1%
     { key: 3, name: 'Eb', count: 7338, color: '#bf00ff' }   // 4.3%
 ];
-// (Datos de Colab - Céll 42)
 const topArtistsReal = [
     { name: 'Francisco Canaro', count: 2227, color: '#00FFFF' }, 
     { name: 'Эрнест Хемингуэй', count: 1211, color: '#0077B6' },
@@ -74,7 +67,6 @@ const topArtistsReal = [
     { name: 'Frédéric Chopin', count: 1017, color: '#90E0EF' },
     { name: 'Johann Sebastian Bach', count: 925, color: '#FF6B6B' },
 ];
-// (Datos de Colab - Célls 36, 38, 40, 41)
 const outlierSongsReal = [
     { title: 'Tempo más Alto', icon: Zap, value: '243.51 BPM', name: 'I Don\'t Want You on My Mind', artist: 'Bill Withers', color: 'text-red-400' },
     { title: 'La Más Popular', icon: Star, value: '100 Pop.', name: 'Dakiti', artist: 'Bad Bunny, Jhay Cortez', color: 'text-yellow-400' },
@@ -82,7 +74,7 @@ const outlierSongsReal = [
     { title: 'La Más Baja (Loudness)', icon: ThumbsDown, value: '-60.00 dB', name: 'Pause Track - Live', artist: 'Benny Goodman', color: 'text-gray-400' },
 ];
 
-// --- DATOS DERIVADOS (KPIs) ---
+// --- DATOS DERIVADOS ---
 const firstYear = '1921';
 const lastYear = '2020';
 const avgDurationAll = '3.85 min'; 
@@ -569,8 +561,8 @@ const HallazgosPage = memo(({ isDark }) => {
 
      return (
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-12 h-full overflow-y-auto custom-scrollbar">
-            <div> <h1 className={`text-3xl font-title ${textClasses}`}>Hallazgos Clave & Equipo</h1> <p className={`mb-8 font-body ${labelClasses}`}> Resumen de tendencias (1921-2020) y las personas detrás del análisis. </p> </div>
-            {/* Sección Hallazgos y Conclusiones */}
+            <div> <h1 className={`text-3xl font-title ${textClasses}`}>Hallazgos Clave & Equipo</h1> <p className={`mb-8 font-body ${labelClasses}`}> Resumen de tendencias (1921-2020) y las personas detrás del análisis :) </p> </div>
+           
             <section className="space-y-6"> 
                 <h2 className={`text-2xl font-title ${textClasses}`}>Principales Descubrimientos</h2> 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5"> 
@@ -676,7 +668,7 @@ function App() {
 
   // Lógica para APLICAR el tema al <html>
   useEffect(() => {
-     const root = document.documentElement; // Esto es <html>
+     const root = document.documentElement; 
      
      if (isDark) {
         root.classList.add('dark');
@@ -686,7 +678,7 @@ function App() {
         localStorage.setItem('theme', 'light');
      }
      
-  }, [isDark]); // Se ejecuta cada vez que 'isDark' cambia
+  }, [isDark]); 
 
 
   // Navegación
@@ -709,7 +701,6 @@ function App() {
 
 
   return (
-    // Aplicamos la fuente 'font-body' (Red Hat Display) a todo
     <div className={`flex flex-col h-screen font-body`}>
        
        {/* HEADER: Usa las variables CSS */}
@@ -736,7 +727,7 @@ function App() {
             </button>
           ))}
           <button
-              onClick={() => setIsDark(!isDark)} // El interruptor
+              onClick={() => setIsDark(!isDark)} // El interruptor dark mode
               className="p-2 rounded-full text-[var(--text-muted)] hover:text-[var(--accent-color)] hover:bg-[var(--accent-color-light)] transition-colors duration-200 ml-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-color)] focus:ring-[var(--accent-color)]"
               aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
                title={isDark ? "Modo Claro" : "Modo Oscuro"}
@@ -753,12 +744,12 @@ function App() {
             <CurrentPage 
                 setActiveTab={setActiveTab} 
                 isDark={isDark} 
-                data={dataByDecadeReal} // <-- Aquí pasamos los datos
+                data={dataByDecadeReal} 
             />
           </div>
        </main>
 
-       {/* Footer */}
+       {/* Footer  */}
        <footer role="contentinfo" className={`flex-shrink-0 p-3 text-center text-xs border-t bg-[var(--header-bg)] border-[var(--header-border)] text-[var(--text-muted)]`}>
          Music Analytics Dashboard © {new Date().getFullYear()} - Datos 1921-2020.
        </footer>
