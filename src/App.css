@@ -1,38 +1,56 @@
-.App {
-  text-align: center;
+/* --- INICIO DE App.css --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==============================================
+  DEFINICIÓN DE VARIABLES DE TEMA
+==============================================
+*/
+
+/* :root define el MODO CLARO (LIGHT) */
+:root {
+  --bg-color: #f0f4f8; /* Un blanco suave */
+  --text-color: #1a202c; /* Texto oscuro principal */
+  --text-muted: #4A5568; /* Texto gris */
+  
+  /* Colores del Header y Tarjetas (Claro) */
+  --header-bg: rgba(255, 255, 255, 0.85); /* desenfoque blanco */
+  --header-border: rgba(0, 0, 0, 0.1);
+  --card-bg-color: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.1);
+
+  /* Colores de Acento (Claro) */
+  --primary-color: #004D80;
+  --accent-color: #0077B6;
+  --accent-color-light: rgba(0, 119, 182, 0.1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html.dark {
+  --bg-color: #0b132b; /* Fondo azul oscuro principal */
+  --text-color: #E0E0FF; /* Texto claro principal */
+  --text-muted: #A0AEC0; /* Texto gris claro */
+
+  --header-bg: rgba(11, 19, 43, 0.85); /* desenfoque oscuro */
+  --header-border: rgba(125, 125, 125, 0.2);
+  --card-bg-color: rgba(23, 29, 49, 0.6);
+  --glass-border: rgba(125, 125, 125, 0.2);
+  
+  --primary-color: #E0E0FF; 
+  --accent-color: #00FFFF; /* Cian acento */
+  --accent-color-light: rgba(0, 255, 255, 0.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+body {
+  /* ¡Esto aplica el fondo automáticamente! */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Clases de utilidad para los gráficos */
+.recharts-text.recharts-cartesian-axis-tick-value {
+  fill: var(--text-muted) !important;
+  font-size: 11px;
 }
